@@ -34,7 +34,7 @@ public class TaskReleaseHandler implements ActionListener
     public void actionPerformed(ActionEvent evt) 
     {   
         //calls the method that the allows the user to admit a vehicle
-        this.releaseVehicle(admit.vehicles);
+        this.releaseVehicle(admit.getVehicles());
     }
     
     //Prompts the user to enter the registration of the car they wish to release

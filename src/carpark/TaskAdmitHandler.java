@@ -23,7 +23,7 @@ public class TaskAdmitHandler implements ActionListener
 {
     private CarParkFrame frame ; 
     private CarParkPanel panel;
-    protected Vehicle[] vehicles;
+    private Vehicle[] vehicles;
     
     //vehicle references neccessary for the polymorphic array
     Vehicle vehicleOne;
@@ -41,6 +41,11 @@ public class TaskAdmitHandler implements ActionListener
     Vehicle vehicleThirteen;
     Vehicle vehicleFourteen;
     Vehicle vehicleFifteen;
+    
+    public Vehicle[] getVehicles()
+    {
+       return this.vehicles;
+    }
     
     //constructor with variables and the polymorphic vehicle array being initialised 
     public TaskAdmitHandler(CarParkFrame theFrame, CarParkPanel thePanel) 

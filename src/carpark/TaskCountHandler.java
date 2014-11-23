@@ -37,7 +37,7 @@ public class TaskCountHandler implements ActionListener
     public void actionPerformed(ActionEvent evt) 
     {   
         //calls the method that counts the vehicles in the vehicles array.
-        this.countVehicles(admit.vehicles);
+        this.countVehicles(admit.getVehicles());
     }
     
     

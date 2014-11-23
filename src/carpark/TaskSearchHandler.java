@@ -33,7 +33,7 @@ public class TaskSearchHandler implements ActionListener
     public void actionPerformed(ActionEvent evt) 
     {   
         //executes the method that allows for searching
-        this.searchVehicles(admit.vehicles);
+        this.searchVehicles(admit.getVehicles());
     }
     
     
