@@ -1,6 +1,6 @@
 /*
- * Version 0.1
- * Last Modified: 14/11/2014
+ * Version 0.9
+ * Last Modified: 27/11/2014
  *
  *
  * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
@@ -10,7 +10,6 @@ package carpark;
 //This class contains code relevant to a High Value vehicle, as its checkSpaces method will be implemented differently from other types of vehicle.
 public class HighValueVehicle extends Vehicle 
 {
-    private int value;
     
      //method that checks for a free parking space suitable for a HighValueVehicle
     @Override

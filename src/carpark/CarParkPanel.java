@@ -1,6 +1,6 @@
 /*
- * Version 0.1
- * Last Modified: 14/11/2014
+ * Version 0.9
+ * Last Modified: 27/11/2014
  *
  *
  * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
@@ -18,9 +18,9 @@ import java.awt.geom.Line2D;
 //The purpose of this class is to hold all the drawn on components of the GUI.
 public class CarParkPanel extends JPanel
 {   
-   protected ParkingSpace[] parkingSpaces;
+   protected ParkingSpace[] parkingSpaces_;
     
-    //public ParkingSpace[] parkingSpaceArray; //this array holds the parkingSpaces
+    //public ParkingSpace[] parkingSpaceArray; //this array holds the parkingSpaces_
     public CarParkPanel()
     {
     this.setBorder(BorderFactory.createLineBorder(Color.blue)); 
@@ -42,7 +42,7 @@ public class CarParkPanel extends JPanel
     ParkingSpace spaceFive = new ParkingSpace(800, 700, 60, 110);
     ParkingSpace spaceFour = new ParkingSpace(900, 700, 60, 110);
     
-    parkingSpaces = new ParkingSpace[]{spaceOne, spaceTwo, spaceThree, spaceFour,
+    parkingSpaces_ = new ParkingSpace[]{spaceOne, spaceTwo, spaceThree, spaceFour,
     spaceFive, spaceSix, spaceSeven, spaceEight, spaceNine, spaceTen,
     spaceEleven, spaceTwelve, spaceThirteen, spaceFourteen, spaceFifteen};
     }
@@ -66,7 +66,7 @@ public class CarParkPanel extends JPanel
     ga.setPaint(Color.GREEN);
             
     //An enhanced for-loop that itterates through the array and fills all the parking spaces as green
-    for (ParkingSpace theSpace : parkingSpaces) 
+    for (ParkingSpace theSpace : parkingSpaces_) 
     {
         ga.fill(theSpace);
     }
@@ -75,7 +75,7 @@ public class CarParkPanel extends JPanel
     ga.setPaint(Color.BLACK);
     
     //An enhanced for-loop that itterates through the array and draws a black outline around the parking spaces
-    for (ParkingSpace theSpace : parkingSpaces)
+    for (ParkingSpace theSpace : parkingSpaces_)
     {
         ga.draw(theSpace);
     }
@@ -91,9 +91,9 @@ public class CarParkPanel extends JPanel
 //THIS PART IS THE REPAINTING. CHECKS IF THE BAYS ARE FREE. IF NOT PAINTS RED.
     for(int i =0; i<=14; i++)
       {ga.setColor(Color.red);
-          if(parkingSpaces[i].isFree()==false)
+          if(parkingSpaces_[i].isFree()==false)
           {
-              ga.fill(parkingSpaces[i]);
+              ga.fill(parkingSpaces_[i]);
           }
       }
     

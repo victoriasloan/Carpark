@@ -1,6 +1,6 @@
 /*
- * Version 0.1
- * Last Modified: 14/11/2014
+ * Version 0.9
+ * Last Modified: 27/11/2014
  *
  *
  * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
@@ -20,7 +20,7 @@ import javax.swing.JMenu;
 public class CarParkFrame extends JFrame
 {
     
-    private CarParkPanel panel;
+    private CarParkPanel panel_;
     
     //constructor that adds all of the relevant components
      public CarParkFrame()
@@ -64,11 +64,11 @@ public class CarParkFrame extends JFrame
      
      
         //instance of carparkpanel & and adding it to frame
-        panel = new CarParkPanel();
-        this.add(panel);
+        panel_ = new CarParkPanel();
+        this.add(panel_);
         
          //Action Listener to provide functionality to the Admit Vehicle menu item.
-         TaskAdmitHandler admitClick = new TaskAdmitHandler(this, panel); 
+         TaskAdmitHandler admitClick = new TaskAdmitHandler(this, panel_); 
          menuTasksAdmitVehicle.addActionListener(admitClick);
         
         
@@ -81,16 +81,15 @@ public class CarParkFrame extends JFrame
         menuTasksCountVehicles.addActionListener(countClick);
         
         //Action Listener to provide functionality to the Count vehicles menu item.
-        TaskSearchHandler searchClick = new TaskSearchHandler(this, admitClick); //passes in admit click to have access to array of vehicles.
+        TaskSearchHandler searchClick = new TaskSearchHandler(this,panel_, admitClick); //passes in admit click to have access to array of vehicles.
         menuTasksSearch.addActionListener(searchClick);
         
         //Action Listener to provide functionality to the Release vehicle menu item.
-        TaskReleaseHandler releaseClick = new TaskReleaseHandler(this, admitClick, panel); //passes in admit click to have access to array of vehicles.
+        TaskReleaseHandler releaseClick = new TaskReleaseHandler(this, admitClick, panel_); //passes in admit click to have access to array of vehicles.
         menuTasksReleaseVehicle.addActionListener(releaseClick);        
-        
-
-        
+          
     }
+
      
      
      

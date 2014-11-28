@@ -1,7 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Version 0.9
+ * Last Modified: 27/11/2014
+ *
+ *
+ * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
  */
 package carpark;
 
@@ -9,21 +11,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Zeki
- */
 //This class' purpose is to handle a user selecting the Exit option.
 public class FileExitHandler implements ActionListener
 {
  
 
-    private CarParkFrame frame ; 
+    private CarParkFrame frame_; 
     
     //constructor that initialises the frame variable
     public FileExitHandler(CarParkFrame theFrame) 
     { 
-        frame = theFrame ; 
+        frame_ = theFrame ; 
     } 
     
     
@@ -42,7 +40,7 @@ public class FileExitHandler implements ActionListener
     { 
         //Checks if it is safe to close the application 
         Object[] options = {"Exit","Cancel!"};
-        int choice = JOptionPane.showOptionDialog(frame,"Are you sure you wish to exit?","Exit",
+        int choice = JOptionPane.showOptionDialog(frame_,"Are you sure you wish to exit?","Exit",
                                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                                     null,     //do not use a custom Icon
                                                     options,  //the titles of buttons

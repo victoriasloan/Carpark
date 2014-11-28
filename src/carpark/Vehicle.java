@@ -1,22 +1,20 @@
 /*
- * Version 0.1
- * Last Modified: 14/11/2014
+ * Version 0.9
+ * Last Modified: 27/11/2014
  *
  *
  * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
  */
 package carpark;
 
-//The purpose of this class is to hold the abstract methods that the other classes can override
+
 
 import javax.swing.JOptionPane;
-
+//The purpose of this class is to hold the abstract methods that the other classes can override
 // and allow some instance variables to be inherited.
 public abstract class Vehicle 
 {
-    private String make; 
-    private String model;
-    private String registration;
+    private String registration_;
     private int space;
     
     //abstract method that will be implemented by classes that inherit from Vehicle
@@ -124,19 +122,23 @@ public abstract class Vehicle
     }
     
     //getter and setter methods for private instance variables
-    public String getRegistration() {
-        return registration;
+    public String getRegistration() 
+    {
+        return registration_;
     }
 
-    public int getSpace() {
+    public int getSpace() 
+    {
         return space;
     }
 
-    public void setRegistration(String theReg) {
-        this.registration = theReg;
+    public void setRegistration(String theReg) 
+    {
+        this.registration_ = theReg;
     }
 
-    public void setSpace(int space) {
+    public void setSpace(int space) 
+    {
         this.space = space;
     }
     

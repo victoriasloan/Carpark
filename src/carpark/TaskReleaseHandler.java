@@ -1,31 +1,29 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Version 0.9
+ * Last Modified: 27/11/2014
+ *
+ *
+ * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
  */
 package carpark;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
-/**
- *
- * @author Zeki
- */
 
 //This class' purpose is to handle a user selecting the Release Vehicle option.         //IS THERE A WAY TO USE THE MTHOD FROM THE SEARCH CLASS FOR THIS??
 public class TaskReleaseHandler implements ActionListener
 {
-    private CarParkFrame frame ;
-    private CarParkPanel panel;
-    private TaskAdmitHandler admit;
+    private CarParkFrame frame_ ;
+    private CarParkPanel panel_;
+    private TaskAdmitHandler admit_;
     
     //constructor that initialises the variables.
     public TaskReleaseHandler(CarParkFrame theFrame, TaskAdmitHandler theAdmit, CarParkPanel thePanel) 
     { 
-        frame = theFrame;
-        admit = theAdmit;
-        panel = thePanel;
+        frame_ = theFrame;
+        admit_ = theAdmit;
+        panel_ = thePanel;
     } 
 
 
@@ -33,8 +31,15 @@ public class TaskReleaseHandler implements ActionListener
 @Override
     public void actionPerformed(ActionEvent evt) 
     {   
-        //calls the method that the allows the user to admit a vehicle
-        this.releaseVehicle(admit.getVehicles());
+        try
+        {
+            //calls the method that the allows the user to admit a vehicle
+            this.releaseVehicle(admit_.getVehicles());
+        }
+        catch(NullPointerException cancel)
+        {
+           //catches a null pointer exception in the event the user hits cancel and no vehicle object exists to execute the method
+        }
     }
     
     //Prompts the user to enter the registration of the car they wish to release
@@ -44,7 +49,7 @@ public class TaskReleaseHandler implements ActionListener
     {
        boolean found = false;
         int i = 0;
-        String target = admit.enterReg();
+        String target = admit_.enterReg();
         
         //searches through the array of vehicles. If the vehicle isn't null, then check its reg to see if it matches
         while((i<=14) && (found==false)) 
@@ -53,7 +58,7 @@ public class TaskReleaseHandler implements ActionListener
             {
                 if( target.equals(vehicles[i].getRegistration())) //if the target is found, then display the following message.
                 {
-                    JOptionPane.showMessageDialog(frame,
+                    JOptionPane.showMessageDialog(frame_,
                     "The car you are looking for is in bay: " + vehicles[i].getSpace());
                                         
                     found = true;
@@ -65,13 +70,13 @@ public class TaskReleaseHandler implements ActionListener
         
         if(found == false) // if the target isn't found, display the following message
         {
-            JOptionPane.showMessageDialog(frame,
+            JOptionPane.showMessageDialog(frame_,
             "The registration you have entered doesn't match any vehicles in the car park!");
         }
         else //if found then checks if the user definitely wants to release the vehicle
         {
             Object[] options = {"Release","Cancel!"};
-            int choice = JOptionPane.showOptionDialog(frame,"Are you sure you wish to release this vehicle?","Release Vehicle",
+            int choice = JOptionPane.showOptionDialog(frame_,"Are you sure you wish to release this vehicle?","Release Vehicle",
                                                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
                                                     null,     //do not use a custom Icon
                                                     options,  //the titles of buttons
@@ -84,10 +89,10 @@ public class TaskReleaseHandler implements ActionListener
                                                         //that occurs during the checking for a matching vehicle
                                                         //even if a vehicle has been found. 
   
-            panel.parkingSpaces[space-1].setAsFree();   //frees [space-1] because the array starts at zero, whereas the parking spaces representation
+            panel_.parkingSpaces_[space-1].setAsFree();   //frees [space-1] because the array starts at zero, whereas the parking spaces representation
                                                         //starts at 1.
             
-            frame.repaint();                            //repaints the frame so that the newly freed up parking space is green again
+            frame_.repaint();                            //repaints the frame_ so that the newly freed up parking space is green again
             } 
         } 
     }

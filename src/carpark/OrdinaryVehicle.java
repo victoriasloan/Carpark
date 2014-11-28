@@ -1,6 +1,6 @@
 /*
- * Version 0.1
- * Last Modified: 14/11/2014
+ * Version 0.9
+ * Last Modified: 27/11/2014
  *
  *
  * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
@@ -13,9 +13,7 @@ package carpark;
 
 public class OrdinaryVehicle extends Vehicle
 {   
-    private int numberOfDoors;
-    
-    
+
     //goes through parkingSpaces looking for an available free space. First from spaces 11-15, then from 1-5, then finally from 6-10.
     //returns whether or not the check is successful
     @Override

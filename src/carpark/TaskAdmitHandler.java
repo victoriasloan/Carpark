@@ -1,29 +1,29 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Version 0.9
+ * Last Modified: 27/11/2014
+ *
+ *
+ * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
  */
 package carpark;
 
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-
-
-/**
- *
- * @author Zeki
- */
 
 //This class' purpose is to handle a user selecting the admit vehicle option.
 public class TaskAdmitHandler implements ActionListener
 {
-    private CarParkFrame frame ; 
-    private CarParkPanel panel;
-    private Vehicle[] vehicles;
+    private  CarParkFrame frame_ ; 
+    private  CarParkPanel panel_;
+    private Vehicle[] vehicles_;
+
+    public Vehicle[] getVehicles() 
+    {
+        return vehicles_;
+    }
     
     //vehicle references neccessary for the polymorphic array
     Vehicle vehicleOne;
@@ -42,17 +42,12 @@ public class TaskAdmitHandler implements ActionListener
     Vehicle vehicleFourteen;
     Vehicle vehicleFifteen;
     
-    public Vehicle[] getVehicles()
-    {
-       return this.vehicles;
-    }
-    
     //constructor with variables and the polymorphic vehicle array being initialised 
     public TaskAdmitHandler(CarParkFrame theFrame, CarParkPanel thePanel) 
     {   
-        frame = theFrame ; 
-        panel = thePanel;
-        vehicles = new Vehicle[]{vehicleOne, vehicleTwo, vehicleThree, vehicleFour, vehicleFive, vehicleSix, vehicleSeven, 
+        frame_ = theFrame ; 
+        panel_ = thePanel;
+        vehicles_ = new Vehicle[]{vehicleOne, vehicleTwo, vehicleThree, vehicleFour, vehicleFive, vehicleSix, vehicleSeven, 
                                  vehicleEight, vehicleNine, vehicleTen, vehicleEleven, vehicleTwelve, vehicleThirteen, 
                                  vehicleFourteen, vehicleFifteen};
     } 
@@ -61,24 +56,34 @@ public class TaskAdmitHandler implements ActionListener
     @Override
     public void actionPerformed(ActionEvent evt) 
     {   
+        try
+       {
         //executes the method that allows the user to admit a vehicle
-        this.admitVehicle(panel.parkingSpaces);
+        this.admitVehicle(panel_.parkingSpaces_); 
         
         //repaints the parking space that was taken, red
-        frame.repaint();
+        frame_.repaint();
+       }
+        catch (NullPointerException cancel)
+        {
+          //catches a null pointer exception in the event the user hits cancel and no vehicle object exists to run the method
+        }
+
     }
     
 
          //Allows the user to admit a vehicle.
     protected void admitVehicle(ParkingSpace[] parkingSpaces)
-    {   
+    {        
+        //Brings up a dialogue box that allows for user selection of the type of vehicle
+        String selection = this.selectVehicle();
+        
         //brings up a dialogue box that allows the user to enter the registration
         String theReg = this.enterReg();
         
-        //Brings up a dialogue box that allows for user selection of the type of vehicle
-        String selection = this.selectVehicle();
-       
-        
+        //checks to make sure the entered reg is unique. If it isn't, the user is allowed to reenter the reg
+        theReg = this.checkRegIsUnique(theReg);
+                
         int i=0;
         boolean found = false;
         
@@ -92,9 +97,9 @@ public class TaskAdmitHandler implements ActionListener
                 //if space exists then make new instance of OrdinaryVehicle
                 while((i<=14) && (found==false))
                     {
-                        if(vehicles[i]==null)  //if element is null, then nothing exists in it.
+                        if(vehicles_[i]==null)  //if element is null, then nothing exists in it.
                         {
-                            vehicles[i]= new OrdinaryVehicle();
+                            vehicles_[i]= new OrdinaryVehicle();
                             found = true;
                         }
                         
@@ -108,9 +113,9 @@ public class TaskAdmitHandler implements ActionListener
                 //if space exists then make new instance of LargeVehicle
                 while((i<=14) && (found==false))  
                     {
-                        if(vehicles[i]==null) //if element is null, then nothing exists in it.
+                        if(vehicles_[i]==null) //if element is null, then nothing exists in it.
                         {
-                            vehicles[i]= new LargeVehicle();
+                            vehicles_[i]= new LargeVehicle();
                             found = true;
                         }
                         
@@ -124,9 +129,9 @@ public class TaskAdmitHandler implements ActionListener
                 //if space exists then make new instance of HighValueVehicle
                 while((i<=14) && (found==false)) 
                     {
-                        if(vehicles[i]==null) //if element is null, then nothing exists in it.
+                        if(vehicles_[i]==null) //if element is null, then nothing exists in it.
                         {
-                            vehicles[i]= new HighValueVehicle();
+                            vehicles_[i]= new HighValueVehicle();
                             found = true;
                         }
                         
@@ -136,73 +141,36 @@ public class TaskAdmitHandler implements ActionListener
                 
         }  
         
-        //this is where the polymorphism will be implemented. as it will be an array of vehicles
+        //this is where the polymorphism will be implemented. as it will be an array of vehicles_
         //depending on what the user has selected, it will be that type of object that will check for spaces. ie. high value/large/ordinary. 
         
         //checks for spaces
         // and set reg to the vehicle to indidcate that space is taken. Only if space was found tho.
         if(found==true)
         {
-            if(vehicles[i-1].checkSpaces(parkingSpaces, panel) == true) // the element is (i-1), because of the incrementation of i
+            if(vehicles_[i-1].checkSpaces(parkingSpaces, panel_) == true) // the element is (i-1), because of the incrementation of i
             {                                                            //that occurs during the checking for room for new vehicle
-                vehicles[i-1].setRegistration(theReg);                   //even if a vehicle has been found.   
+                vehicles_[i-1].setRegistration(theReg);                   //even if a vehicle has been found.   
             }                                
         }
         else //prints a message if the carpark is full
         {
-            JOptionPane.showMessageDialog(frame,
+            JOptionPane.showMessageDialog(frame_,
                 "I'm sorry, the carPark is full.");
         }
     }
     
     
-    //a method that allows the user to enter a registration number
-    public String enterReg()
-    {   
-       
-        String theReg = (String)JOptionPane.showInputDialog(
-                    frame,
-                    "Enter the registration of the vehicle:",
-                    "Enter Registration",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    "");
-        
-        while(theReg.length()>8)
-        {
-          theReg = this.reEnterReg();
-        }
-        return theReg;
-    }
     
-    //if the user enters in a registration that is too long, this informs them
-    //and allows them to enter it again
-    public String reEnterReg()
-    {
-        JOptionPane.showMessageDialog(frame,
-            "The maximum length is 8.");
-            
-        String theReg = (String)JOptionPane.showInputDialog(
-                    frame,
-                    "enter a registration with a maximum of 8 characters:",
-                    "Enter Registration",
-                    JOptionPane.PLAIN_MESSAGE,
-                    null,
-                    null,
-                    "");
-        return theReg;
-    }
     
     //method that brings up a dialogue box that allows the user to choose the type of vehicle.
     public String selectVehicle()
     {
                 //Brings up a dialogue box that allows for user selection of the type of vehicle
         Object[] possibilities = {"Ordinary Vehicle", "Large Vehicle", "High Value Vehicle"};
-        String selection = (String)JOptionPane.showInputDialog(
-                    frame,
+        String selection = (String)JOptionPane.showInputDialog(frame_,
                     "What type of vehicle is it?",
-                    "Customized Dialog",
+                    "Vehicle Selection",
                     JOptionPane.PLAIN_MESSAGE,
                     null, //do not use a custom icon
                     possibilities,
@@ -210,6 +178,72 @@ public class TaskAdmitHandler implements ActionListener
         
         return selection;
     }
+    
+    
+    //a method that allows the user to enter a registration number
+    public String enterReg()
+    {   
+       
+        String theReg = (String)JOptionPane.showInputDialog(frame_,
+                    "Enter the registration of the vehicle:",
+                    "Enter Registration",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    "");
+        while(theReg.length()>8 || theReg.length()<5)  //validates the user input so that they may only enter a registration of max 8 characters
+        {
+          JOptionPane.showMessageDialog(frame_,
+            "The reg length must be between 5 and 8 characters.");
+          theReg = this.reEnterReg();
+        } 
+        return theReg; //returns the entered reg
+        }
+    
+    
+    //if the user enters in a registration that is too long, this informs them
+    //and allows them to enter it again
+    public String reEnterReg()
+    {
+            
+        String theReg = (String)JOptionPane.showInputDialog(frame_,
+                    "Enter a registration between 5 and 8 characters:",
+                    "Enter Registration",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    "");
+        theReg = this.checkRegIsUnique(theReg); //validates the re-entered reg.
+        return theReg; //returns the re-entered reg.
+        
+        
+        
+    }
+   
+    
+    
+    //A method that checks whether or not the registration is unique. If it isn't, the user is prompted to re-enter
+    public String checkRegIsUnique(String theReg)
+    {
+        int j=0;
+        while((j<=14) && (vehicles_[j]!=null))
+        {
+            if(theReg.equals(vehicles_[j].getRegistration())) //checks if the reg is unique. if it isn't then a message is printed and the user re-enters
+            {
+                 JOptionPane.showMessageDialog(frame_,
+            "A car already exists with this registration.");
+            
+                 
+                 theReg = this.reEnterReg(); //prompts the user to re-enter
+                 
+                
+            }
+            
+            j++; //increments the counter variable
+        }
+        return theReg; //returns the validated registration
+    }
+    
     
 } 
 

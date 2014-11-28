@@ -1,6 +1,6 @@
 /*
- * Version 0.1
- * Last Modified: 14/11/2014
+ * Version 0.9
+ * Last Modified: 27/11/2014
  *
  *
  * @author Victoria Sloan B00637620, Zeki Kucuk-Kose B00637176
@@ -10,9 +10,7 @@ package carpark;
 //This class contains code relevant to a Large vehicle, as its checkSpaces method will be implemented differently from other types of vehicle.
 public class LargeVehicle extends Vehicle 
 {
-    private int weight;
-    
-    
+
     @Override
     //method that checks for a free parking space suitable (spaces 6-10) for a LargeVehicle
     public boolean checkSpaces(ParkingSpace[] parkingSpaces, CarParkPanel panel)
