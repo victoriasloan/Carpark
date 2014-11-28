@@ -146,15 +146,23 @@ public class TaskAdmitHandler implements ActionListener
         
         //checks for spaces
         // and set reg to the vehicle to indidcate that space is taken. Only if space was found tho.
-        if(found==true)
+        i--;
+        if((found==true) && (vehicles_[i].checkSpaces(parkingSpaces, panel_) == true))
         {
-            if(vehicles_[i-1].checkSpaces(parkingSpaces, panel_) == true) // the element is (i-1), because of the incrementation of i
-            {                                                            //that occurs during the checking for room for new vehicle
-                vehicles_[i-1].setRegistration(theReg);                   //even if a vehicle has been found.   
-            }                                
+             // the element is (i-1), because of the incrementation of i
+             //that occurs during the checking for room for new vehicle
+            //even if a vehicle has been found.
+                vehicles_[i].setRegistration(theReg);                      
+                                            
         }
         else //prints a message if the carpark is full
-        {
+        {   
+            if(i!=14)
+            {
+                vehicles_[i] = null; // this is to stop a new large vehicle being stored even if no spaces are free
+                                         //only occurs where i!=14 to prevent the final element being accidentally set to null
+                                         //as a result of a failed search.
+            }
             JOptionPane.showMessageDialog(frame_,
                 "I'm sorry, the carPark is full.");
         }
@@ -191,15 +199,16 @@ public class TaskAdmitHandler implements ActionListener
                     null,
                     null,
                     "");
-        while(theReg.length()>8 || theReg.length()<5)  //validates the user input so that they may only enter a registration of max 8 characters
+        
+        while(theReg.length()<3 || theReg.length()>8)  //validates the user input so that they may only enter a registration of max 8 characters
         {
           JOptionPane.showMessageDialog(frame_,
-            "The reg length must be between 5 and 8 characters.");
+            "The registration length should be between 3 and 8 characters.");
           theReg = this.reEnterReg();
-        } 
-        return theReg; //returns the entered reg
         }
-    
+       
+        return theReg; //returns the entered reg
+    }
     
     //if the user enters in a registration that is too long, this informs them
     //and allows them to enter it again
@@ -207,7 +216,7 @@ public class TaskAdmitHandler implements ActionListener
     {
             
         String theReg = (String)JOptionPane.showInputDialog(frame_,
-                    "Enter a registration between 5 and 8 characters:",
+                    "Enter a registration between 3 and 8 characters:",
                     "Enter Registration",
                     JOptionPane.PLAIN_MESSAGE,
                     null,
@@ -215,11 +224,8 @@ public class TaskAdmitHandler implements ActionListener
                     "");
         theReg = this.checkRegIsUnique(theReg); //validates the re-entered reg.
         return theReg; //returns the re-entered reg.
-        
-        
-        
     }
-   
+    
     
     
     //A method that checks whether or not the registration is unique. If it isn't, the user is prompted to re-enter
@@ -231,7 +237,7 @@ public class TaskAdmitHandler implements ActionListener
             if(theReg.equals(vehicles_[j].getRegistration())) //checks if the reg is unique. if it isn't then a message is printed and the user re-enters
             {
                  JOptionPane.showMessageDialog(frame_,
-            "A car already exists with this registration.");
+            "A vehicle already exists with this registration.");
             
                  
                  theReg = this.reEnterReg(); //prompts the user to re-enter

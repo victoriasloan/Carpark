@@ -63,12 +63,23 @@ public class CarParkPanel extends JPanel
     ga.fill(pavement);
     
     //colour set back to green to draw the parking spaces in green
-    ga.setPaint(Color.GREEN);
+               ga.setPaint(Color.GREEN); 
+
             
     //An enhanced for-loop that itterates through the array and fills all the parking spaces as green
     for (ParkingSpace theSpace : parkingSpaces_) 
     {
-        ga.fill(theSpace);
+        if(theSpace.isFree()==true)
+        {
+           ga.setPaint(Color.GREEN); 
+           ga.fill(theSpace); 
+        }
+        else if (theSpace.isFree()==false)
+        {
+            ga.setColor(Color.RED);
+            ga.fill(theSpace);
+        }
+        
     }
         
     //sets the paint back to black
@@ -88,14 +99,7 @@ public class CarParkPanel extends JPanel
     ga.setPaint(Color.DARK_GRAY);
     ga.fill(attendantStation);
     
-//THIS PART IS THE REPAINTING. CHECKS IF THE BAYS ARE FREE. IF NOT PAINTS RED.
-    for(int i =0; i<=14; i++)
-      {ga.setColor(Color.red);
-          if(parkingSpaces_[i].isFree()==false)
-          {
-              ga.fill(parkingSpaces_[i]);
-          }
-      }
+
     
         //changes back to black for drawing the remaining components
     ga.setPaint(Color.BLACK);

@@ -59,7 +59,7 @@ public class TaskReleaseHandler implements ActionListener
                 if( target.equals(vehicles[i].getRegistration())) //if the target is found, then display the following message.
                 {
                     JOptionPane.showMessageDialog(frame_,
-                    "The car you are looking for is in bay: " + vehicles[i].getSpace());
+                    "The vehicle you are looking for is in bay: " + vehicles[i].getSpace());
                                         
                     found = true;
                 }

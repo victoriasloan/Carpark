@@ -25,10 +25,10 @@ public class LargeVehicle extends Vehicle
         }
 
         
-       if(found==false) //displays the result if the search failed.
-       {
-           this.displayResult(found, i , panel);
-       }
+     //  if(found==false) //displays the result if the search failed.
+       //{
+       //    this.displayResult(found, i , panel);
+       //}
        
        return found;
     }

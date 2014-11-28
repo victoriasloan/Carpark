@@ -52,28 +52,28 @@ public class TaskSearchHandler implements ActionListener
      // i.e. an instance exists of it.
     protected void searchVehicles(Vehicle[] vehicles, ParkingSpace[] parkingSpaces)
     {   
+        
+       String selection = this.selectSearchType();
+        
         boolean found = false;
         int i = 0;
-        String target = admit_.enterReg();
         
-        //searches through the array of vehicles. If the vehicle isn't null, then check its reg to see if it matches
-        while((i<=14) && (found==false)) 
+        
+        switch(selection)
         {
-            if(vehicles[i]!=null) //if element is null, then nothing exists in it.
-            {
-                if( target.equals(vehicles[i].getRegistration())) //if the target is found, then display the following message.
-                {
-                    JOptionPane.showMessageDialog(frame_,
-                    "The car you are looking for is in bay: " + vehicles[i].getSpace());
-                    
-                    this.flash(parkingSpaces, (vehicles[i].getSpace()-1)); //also flash the space the vehicle is in.
-                                                                           //its -1, because the array starts at zero, and not 1.
-                    found = true;
-                }
-            }
-                        
-            i++;
+            case "Search by Bay Number":
+                int spaceNumber = this.enterSpaceNumber();
+                found = this.searchByBay(i, found, vehicles, spaceNumber, parkingSpaces);
+                break;
+                
+                
+                
+            case "Search by Registration":
+                String target = admit_.enterReg();
+                found = this.searchByReg(i, found, vehicles, target, parkingSpaces);
+                break;
         }
+        
         
         if(found == false) // if the target isn't found, display the following message
         {
@@ -83,10 +83,109 @@ public class TaskSearchHandler implements ActionListener
         
         
     } 
+     
+    //a method that allows the user to choose how they wish to search
+    public String selectSearchType()
+    {
+                //Brings up a dialogue box that allows for user selection of the type of vehicle
+        Object[] possibilities = {"Search by Bay number", "Search by Registration"};
+        String selection = (String)JOptionPane.showInputDialog(frame_,
+                    "What do you want to search by?",
+                    "Search for Vehicle",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null, //do not use a custom icon
+                    possibilities,
+                    "Ordinary Vehicle");
+        
+        return selection;
+    }
     
-
+    
+    
+    
+    
+    
+    public boolean searchByReg(int i, boolean found, Vehicle[] vehicles, String target, ParkingSpace[] parkingSpaces)
+    {
+        //searches through the array of vehicles. If the vehicle isn't null, then check its reg to see if it matches
+        while((i<=14) && (found==false)) 
+        {
+            if(vehicles[i]!=null) //if element is null, then nothing exists in it.
+            {
+                if( target.equals(vehicles[i].getRegistration())) //if the target is found, then display the following message.
+                {
+                    JOptionPane.showMessageDialog(frame_,
+                    "The vehicle you are looking for is in bay: " + vehicles[i].getSpace());
+                    
+                    this.flash(parkingSpaces, (vehicles[i].getSpace()-1)); //also flash the space the vehicle is in.
+                                                                           //its -1, because the array starts at zero, and not 1.
+                    found = true;
+                }
+            }
+                        
+            i++;
+        }
+        return found;
+    }
+    
+    
+    
+    
+    
+    
+    
+    public boolean searchByBay(int i, boolean found, Vehicle[] vehicles, int spaceNumber, ParkingSpace[] parkingSpaces)
+    {
+        //searches through the array of parkingSpaces. If the vehicle isn't null, then check its reg to see if it matches
+        while((i<=14) && (found==false)) 
+        {
+            if(vehicles[i]!=null) //if element is null, then nothing exists in it.
+            {
+                if( spaceNumber == (vehicles[i].getSpace())) //if the target is found, then display the following message.
+                {
+                    JOptionPane.showMessageDialog(frame_,
+                    "The registration of the vehicle in bay: " + spaceNumber + " is " + vehicles[i].getRegistration());
+                    
+                    this.flash(parkingSpaces, (vehicles[i].getSpace()-1)); //also flash the space the vehicle is in.
+                                                                           //its -1, because the array starts at zero, and not 1.
+                    found = true;
+                }
+            }
+                        
+            i++;
+        }
+        return found;
+    }
+    
+    
+    
+    
+    
+    
+    
+    //this method 
+    public int enterSpaceNumber()
+    {
+         String choice = (String)JOptionPane.showInputDialog(frame_,
+                    "Enter the Space that you wish to search:",
+                    "Enter Space number",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    "");
+         int theSpace = Integer.parseInt(choice);
+         return theSpace;
+    }
+        
+    
+    
+    
+    
+    
+    
+    
     // a method that makes the parking space that user is searching for appear to flash.
-    public void flash(final ParkingSpace[] parkingSpaces, final int i)
+    public void flash(ParkingSpace[] parkingSpaces, int i)
     {   
         // Inner class to deal with time-out events
          class MyTimerHandler implements ActionListener

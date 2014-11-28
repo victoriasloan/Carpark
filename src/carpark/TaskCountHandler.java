@@ -55,7 +55,7 @@ public class TaskCountHandler implements ActionListener
         }
         
         JOptionPane.showMessageDialog(frame_,        //prints the following message with the number of cars
-            "The number of cars in the car park is: " + total );
+            "The number of vehicles in the car park is: " + total );
          
     } 
 
