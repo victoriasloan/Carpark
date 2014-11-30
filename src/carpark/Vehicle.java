@@ -26,6 +26,7 @@ public abstract class Vehicle
         if(found == true)
         {
             JOptionPane.showMessageDialog(panel, "Parking Space found." + " Please park in space number: " + i);
+
         }
         
         if(found == false)

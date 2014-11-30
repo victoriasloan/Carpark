@@ -185,7 +185,7 @@ public class TaskSearchHandler implements ActionListener
     
     
     // a method that makes the parking space that user is searching for appear to flash.
-    public void flash(ParkingSpace[] parkingSpaces, int i)
+    public void flash(final ParkingSpace[] parkingSpaces, final int i)
     {   
         // Inner class to deal with time-out events
          class MyTimerHandler implements ActionListener

@@ -92,8 +92,9 @@ public class TaskReleaseHandler implements ActionListener
             panel_.parkingSpaces_[space-1].setAsFree();   //frees [space-1] because the array starts at zero, whereas the parking spaces representation
                                                         //starts at 1.
             
-            frame_.repaint();                            //repaints the frame_ so that the newly freed up parking space is green again
-            } 
+            frame_.repaint();                        //repaints the frame_ so that the newly freed up parking space is green again
+            new TaskAdmitHandler(frame_,panel_).exitAnimation();
+            }
         } 
     }
 }

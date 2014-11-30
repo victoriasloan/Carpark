@@ -10,7 +10,7 @@ package carpark;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 
 
 //This class' purpose is to handle a user selecting the admit vehicle option.
@@ -74,7 +74,8 @@ public class TaskAdmitHandler implements ActionListener
 
          //Allows the user to admit a vehicle.
     protected void admitVehicle(ParkingSpace[] parkingSpaces)
-    {        
+    {
+        this.entryAnimation();
         //Brings up a dialogue box that allows for user selection of the type of vehicle
         String selection = this.selectVehicle();
         
@@ -152,8 +153,8 @@ public class TaskAdmitHandler implements ActionListener
              // the element is (i-1), because of the incrementation of i
              //that occurs during the checking for room for new vehicle
             //even if a vehicle has been found.
-                vehicles_[i].setRegistration(theReg);                      
-                                            
+                vehicles_[i].setRegistration(theReg);
+
         }
         else //prints a message if the carpark is full
         {   
@@ -183,7 +184,6 @@ public class TaskAdmitHandler implements ActionListener
                     null, //do not use a custom icon
                     possibilities,
                     "Ordinary Vehicle");
-        
         return selection;
     }
     
@@ -206,7 +206,8 @@ public class TaskAdmitHandler implements ActionListener
             "The registration length should be between 3 and 8 characters.");
           theReg = this.reEnterReg();
         }
-       
+        panel_.entryY = -100;
+        panel_.repaint();
         return theReg; //returns the entered reg
     }
     
@@ -223,6 +224,8 @@ public class TaskAdmitHandler implements ActionListener
                     null,
                     "");
         theReg = this.checkRegIsUnique(theReg); //validates the re-entered reg.
+        panel_.entryY = -100;
+        panel_.repaint();
         return theReg; //returns the re-entered reg.
     }
     
@@ -244,10 +247,52 @@ public class TaskAdmitHandler implements ActionListener
                  
                 
             }
-            
             j++; //increments the counter variable
         }
         return theReg; //returns the validated registration
+    }
+
+    //Animation for the entry of the car. Simulates a car driving up the attendant.
+    public void entryAnimation() {
+        // Inner class to deal with time-out events
+        class MyEntryHandler implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                //Moving the car up to the attendants station
+                    panel_.entryY++;
+                    panel_.repaint();
+                 if(panel_.entryY == 300) {
+                    ((Timer) evt.getSource()).stop(); // stops the timer.
+                     //panel_.entryY = -100;
+                }
+
+
+            }
+        }
+
+        Timer timer = new Timer(7, new MyEntryHandler());
+        timer.start();
+    }
+
+    //Animation for the car driving away from the station when released.
+    public void exitAnimation() {
+        // Inner class to deal with time-out events
+        class MyExitHandler implements ActionListener {
+
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                    panel_.y--;
+                    panel_.repaint();
+                if(panel_.y == - 580 ) {
+                    ((Timer) evt.getSource()).stop(); // stops the timer.
+                    panel_.y = 700;
+                }
+
+            }
+        }
+        Timer timer = new Timer(7, new MyExitHandler());
+        timer.start();
     }
     
     

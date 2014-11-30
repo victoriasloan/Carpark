@@ -7,6 +7,7 @@
  */
 package carpark;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
@@ -14,11 +15,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 //The purpose of this class is to hold all the drawn on components of the GUI.
 public class CarParkPanel extends JPanel
 {   
    protected ParkingSpace[] parkingSpaces_;
+    public int entryX = 1030;
+    public int entryY = -100;
+    public int x = 1030;
+    public int y = 700;
     
     //public ParkingSpace[] parkingSpaceArray; //this array holds the parkingSpaces_
     public CarParkPanel()
@@ -56,16 +64,23 @@ public class CarParkPanel extends JPanel
      ga.setPaint(Color.green);     
     
     //Creating the rectangle that acts as the background colour of the car park
-    ParkingSpace pavement = new ParkingSpace(100, 50, 925, 850 );
+    ParkingSpace pavement = new ParkingSpace(100, 50, 925, 850);
     
     //draws the pavement in gray
     ga.setPaint(Color.LIGHT_GRAY);
     ga.fill(pavement);
     
     //colour set back to green to draw the parking spaces in green
-               ga.setPaint(Color.GREEN); 
+               ga.setPaint(Color.GREEN);
 
-            
+
+      g.setColor(Color.blue);
+      g.fillRect(entryX, entryY, 60, 90);
+
+      g.setColor(Color.blue);
+      g.fillRect(x, y, 60, 90);
+
+
     //An enhanced for-loop that itterates through the array and fills all the parking spaces as green
     for (ParkingSpace theSpace : parkingSpaces_) 
     {
